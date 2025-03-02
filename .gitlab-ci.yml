@@ -11,10 +11,10 @@ deploy_to_github:
   script:
     - echo "Deploying to GitHub..."
     - git clone --depth 1 https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Game/Discord-Bot.git target-repo
-    - rsync -av --exclude='.git' ./Discord-Bot/ target-repo/
+    - rsync -av --exclude='.git' ./ target-repo/
     - cd target-repo
     - git add .
-    - git commit -m "Automated deployment from GitLab CI/CD"
+    - git commit -m "Automated deployment from GitLab CI/CD" || echo "No changes to commit"
     - git push origin main
   only:
     - main
