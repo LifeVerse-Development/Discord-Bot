@@ -8,16 +8,15 @@ deploy_to_github:
     - apk add --no-cache git rsync
     - git config --global user.name "LifeVerse-Development"
     - git config --global user.email "lifeversegame@gmail.com"
-  script:
-    - echo "Deploying to GitHub..."
-    - git remote remove origin || echo "No existing remote to remove"
     - git init
     - git remote add origin https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Development/Discord-Bot.git
-    - git fetch origin main || echo "No existing main branch, creating a new one"
-    - git checkout -B main origin/main || git checkout -B main
+    - git fetch origin main
+    - git checkout -B main origin/main
+  script:
+    - echo "Deploying to GitHub..."
     - rsync -av --exclude='.git' ./ ./
     - git add .
-    - git commit -m "Automated deployment from GitLab CI/CD" || echo "No changes to commit"
+    - git commit -m "Automated deployment from GitLab CI/CD"
     - git push origin main
   only:
     - main
