@@ -10,7 +10,7 @@ deploy_to_github:
     - git config --global user.email "lifeversegame@gmail.com"
   script:
     - echo "Deploying to GitHub..."
-    - git clone --depth 1 https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Game/Discord-Bot.git target-repo
+    - git clone git@github.com:LifeVerse-Game/Discord-Bot.git target-repo
     - rsync -av --exclude='.git' ./ target-repo/
     - cd target-repo
     - git add .
