@@ -9,9 +9,9 @@ deploy_to_github:
     - git config --global user.name "LifeVerse-Development"
     - git config --global user.email "lifeversegame@gmail.com"
     - git init
+    - git remote remove origin || true
     - git remote add origin https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Development/Discord-Bot.git
-    - git fetch origin main
-    - git checkout -B main origin/main
+    - git fetch origin main || git checkout -B main
   script:
     - echo "Deploying to GitHub..."
     - rsync -av --exclude='.git' ./ ./
