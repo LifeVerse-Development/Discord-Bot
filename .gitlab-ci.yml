@@ -5,16 +5,14 @@ deploy_to_github:
   stage: deploy
   image: alpine:latest
   before_script:
-    - apk add --no-cache git rsync openssh
+    - apk add --no-cache git rsync
     - git config --global user.name "LifeVerse-Game"
     - git config --global user.email "lifeversegame@gmail.com"
-    - mkdir -p ~/.ssh
-    - ssh-keyscan github.com >> ~/.ssh/known_hosts
-    - echo "$CI_PRIVATE_KEY" > ~/.ssh/id_rsa
-    - chmod 600 ~/.ssh/id_rsa
   script:
     - echo "Deploying to GitHub..."
-    - git clone git@github.com:LifeVerse-Game/Discord-Bot.git target-repo
+    # Klone das GitHub-Repository über HTTPS mit dem GITHUB_TOKEN
+    - git clone https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Game/Discord-Bot.git target-repo
+    # Kopiere die Änderungen in das Ziel-Repo
     - rsync -av --exclude='.git' ./ target-repo/
     - cd target-repo
     - git add .
