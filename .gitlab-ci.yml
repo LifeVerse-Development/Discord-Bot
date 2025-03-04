@@ -26,25 +26,23 @@ deploy_to_github:
     - git fetch gitlab-origin --tags
     - git push --mirror https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git
     
+    # Temporäres Verzeichnis entfernen, bevor die Version erstellt wird
+    - cd ..
+    - rm -rf temp-repo
+    
     # Version generieren (z. B. basierend auf Datum + Pipeline-ID)
     - VERSION="v$(date +'%Y%m%d').$CI_PIPELINE_ID"
     - echo "Version: $VERSION"
     
     # Tag erstellen und pushen
     - git tag $VERSION
-    - git push origin $VERSION
+    - git push https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git $VERSION
     
     # Release auf GitHub erstellen
-    - |
-      curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" \
+    - curl -X POST -H "Authorization: token ${GITHUB_TOKEN}" \
            -H "Accept: application/vnd.github.v3+json" \
-           https://api.github.com/repos/${GITHUB_REPO}/releases \
-           -d '{
-                "tag_name": "'"$VERSION"'",
-                "name": "'"$VERSION"'",
-                "body": "Automatisches Release durch GitLab CI/CD.",
-                "draft": false,
-                "prerelease": false
-              }'
+           -d "{\"tag_name\": \"${VERSION}\", \"name\": \"${VERSION}\", \"body\": \"Automatisches Release durch GitLab CI/CD.\", \"draft\": false, \"prerelease\": false}" \
+           https://api.github.com/repos/${GITHUB_REPO}/releases
+
   only:
     - main
