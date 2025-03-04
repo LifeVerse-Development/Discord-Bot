@@ -11,7 +11,7 @@ deploy_to_github:
     - git init
     - git remote remove origin || true
     - git remote add origin https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Development/Discord-Bot.git
-    - git fetch -all
+    - git fetch --all
     - git reset --hard origin/main || git checkout -B main
   script:
     - echo "Deploying to GitHub..."
