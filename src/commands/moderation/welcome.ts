@@ -21,16 +21,16 @@ const WelcomeCommand: Command = {
                 .setName('setup')
                 .setDescription('Setup the complete welcome system with embed configuration. ⚙️')
                 .addChannelOption(option =>
-                    option.setName('channel').setDescription('The channel where the welcome message will be sent. 🏢').setRequired(true),
+                    option.setName('channel').setDescription('The channel where the welcome message will be sent. 🏢').setRequired(false),
                 )
                 .addStringOption(option =>
-                    option.setName('title').setDescription('Title for the welcome message embed. 📝').setRequired(true),
+                    option.setName('title').setDescription('Title for the welcome message embed. 📝').setRequired(false),
                 )
                 .addStringOption(option =>
-                    option.setName('description').setDescription('Description for the welcome message embed. 📖').setRequired(true),
+                    option.setName('description').setDescription('Description for the welcome message embed. 📖').setRequired(false),
                 )
                 .addStringOption(option =>
-                    option.setName('footer').setDescription('Footer text for the welcome message embed. 👣').setRequired(true),
+                    option.setName('footer').setDescription('Footer text for the welcome message embed. 👣').setRequired(false),
                 )
                 .addStringOption(option => option.setName('thumbnail').setDescription('URL for the thumbnail image (optional). 🖼️'))
                 .addStringOption(option => option.setName('image').setDescription('URL for the main image (optional). 🌅'))
