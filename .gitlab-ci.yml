@@ -14,7 +14,7 @@ deploy_to_github:
     - git fetch origin main || git checkout -B main
   script:
     - echo "Deploying to GitHub..."
-    - rsync -av --exclude='.git' ./ ./
+    - rsync -av --exclude='.git' ./
     - git add .
     - git commit -m "Automated deployment from GitLab CI/CD"
     - git push origin main
