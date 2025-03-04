@@ -1,0 +1,17 @@
+image: alpine:latest
+
+before_script:
+  - apk add --no-cache git rsync
+  - git config --global user.name "LifeVerse-Development"
+  - git config --global user.email "lifeversegame@gmail.com"
+
+script:
+  - echo "Deploying to GitHub..."
+
+  - git clone https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Development/Discord-Bot.git
+
+  - rsync -av --exclude='.git' ./
+
+  - git add --all
+  - git commit -m "Automated deployment from GitLab CI/CD"
+  - git push --force origin main
