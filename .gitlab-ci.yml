@@ -21,9 +21,5 @@ deploy_to_github:
     - git push --mirror https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git
     - cd ..
     - rm -rf temp-repo
-    - VERSION="v$(date +'%Y%m%d').$CI_PIPELINE_ID"
-    - echo "Version: $VERSION"
-    - git tag "$VERSION"
-    - git push https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git "$VERSION"
   only:
     - main
