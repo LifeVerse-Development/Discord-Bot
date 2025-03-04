@@ -42,5 +42,6 @@ export const config = {
             },
         ],
         REQUEST_API_BASE_URL: String(EnvUtil.getEnvVar('REQUEST_API_BASE_URL')),
+        OPENAI_API_KEY: String(EnvUtil.getEnvVar('OPENAI_API_KEY')),
     },
 };
