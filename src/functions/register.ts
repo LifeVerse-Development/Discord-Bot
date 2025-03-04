@@ -24,6 +24,7 @@ import PollCommand from '../commands/moderation/poll';
 import AutoModerationCommand from '../commands/moderation/automod';
 import ReactionRoleCommand from '../commands/moderation/reactionrole';
 import TicketCommand from '../commands/moderation/ticket';
+import JoinToCreateCommand from '../commands/moderation/jointocreate';
 import EvalCommand from '../commands/owner/eval';
 import LogoutCommand from '../commands/owner/logout';
 import PingCommand from '../commands/utility/ping';
@@ -61,6 +62,7 @@ const commandFiles = [
     AutoModerationCommand,
     ReactionRoleCommand,
     TicketCommand,
+    JoinToCreateCommand,
     // Owner Commands
     EvalCommand,
     LogoutCommand,

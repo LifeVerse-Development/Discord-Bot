@@ -17,6 +17,7 @@ import { handleAutoMessageRule } from './events/autoModeration';
 import { handleReactionButtonInteraction } from './events/reaction_role';
 import { handleXPListener } from './events/xp_gain';
 import { handleArchiveTicketButton, handleClaimTicketButton, handleCloseTicketButton, handleCreateTicketButton } from './events/ticket_button';
+import { handleVoiceStateUpdate } from './events/joinToCreate';
 
 export interface ExtendedClient extends Client {
     commands: Collection<string, Command>;
@@ -111,6 +112,7 @@ handleBanEvasionEvent(client);
 handleWelcomeEvent(client);
 handleAutoMessageRule(client);
 handleXPListener(client);
+handleVoiceStateUpdate(client);
 
 server.listen(config.server.PORT || 3000, () => {
     console.log(`API server is running on port ${config.server.PORT || 3000}`);
