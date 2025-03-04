@@ -12,14 +12,28 @@ deploy_to_github:
   stage: deploy
   script:
     - echo "Starte Deployment nach GitHub..."
+    
+    # Git konfigurieren
     - git config --global user.name "$GIT_AUTHOR_NAME"
     - git config --global user.email "$GIT_AUTHOR_EMAIL"
-    - git clone https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git temp-repo
+    
+    # GitLab-Repository klonen
+    - git clone --bare https://oauth2:${CI_JOB_TOKEN}@gitlab.com/${CI_PROJECT_PATH}.git temp-repo
     - cd temp-repo
-    - git remote add gitlab-origin $CI_REPOSITORY_URL
-    - git fetch gitlab-origin --tags
-    - git push https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git
+    
+    # GitHub-Repository als Remote hinzufügen
+    - git remote add github https://oauth2:${GITHUB_TOKEN}@github.com/${GITHUB_REPO}.git
+    
+    # Änderungen vom GitLab-Repository holen
+    - git fetch github --tags
+    
+    # Alles nach GitHub pushen (Mit --force wird alles überschrieben)
+    - git push --force github --all
+    - git push --force github --tags
+    
+    # Temporäres Verzeichnis entfernen
     - cd ..
     - rm -rf temp-repo
+
   only:
     - main
