@@ -11,12 +11,13 @@ deploy_to_github:
     - git init
     - git remote remove origin || true
     - git remote add origin https://oauth2:${GITHUB_TOKEN}@github.com/LifeVerse-Development/Discord-Bot.git
-    - git fetch origin main || git checkout -B main
+    - git fetch -all
+    - git reset --hard origin/main || git checkout -B main
   script:
     - echo "Deploying to GitHub..."
-    - rsync -av --exclude='.git' ./
-    - git add .
+    - rsync -av --exclude='.git' ./ ./
+    - git add --all
     - git commit -m "Automated deployment from GitLab CI/CD"
-    - git push origin main
+    - git push --force origin main
   only:
     - main
