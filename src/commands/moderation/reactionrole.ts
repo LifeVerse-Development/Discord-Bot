@@ -1,4 +1,4 @@
-import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits, TextChannel } from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle, PermissionFlagsBits } from 'discord.js';
 import { ReactionRole } from '../../models/ReactionRole';
 import { Command } from '../../functions/handleCommands';
 
@@ -63,63 +63,62 @@ const ReactionRoleCommand: Command = {
             const title = interaction.options.getString('title', true);
             const description = interaction.options.getString('description', true);
             const rolesInput = interaction.options.getString('roles', true);
-
+        
             const embed = new EmbedBuilder()
                 .setColor('#00FF00')
                 .setTitle(title)
                 .setDescription(description)
                 .setTimestamp();
-
+        
             const roles: { emoji: string; roleId: string }[] = [];
             const actionRows: ActionRowBuilder<ButtonBuilder>[] = [];
-
-            const rolePairs = rolesInput.split(',').map((pair) => pair.trim());
             let currentRow = new ActionRowBuilder<ButtonBuilder>();
-
+        
+            const rolePairs = rolesInput.split(',').map((pair) => pair.trim());
+        
             for (const pair of rolePairs) {
                 const [emoji, roleMention] = pair.split('->').map((str) => str.trim());
                 if (!emoji || !roleMention) {
-                    await interaction.reply({ content: 'Invalid format. Use `emoji -> @Role` for each entry.' });
+                    await interaction.reply({ content: 'Invalid format. Use `emoji -> @Role` for each entry.', ephemeral: true });
                     return;
                 }
-
+        
                 const role = interaction.guild?.roles.cache.find((r) => r.toString() === roleMention);
-
                 if (!role) {
-                    await interaction.reply({ content: `Role "${roleMention}" not found.` });
+                    await interaction.reply({ content: `Role "${roleMention}" not found.`, ephemeral: true });
                     return;
                 }
-
+        
                 roles.push({ emoji, roleId: role.id });
-
-                currentRow.addComponents(
-                    new ButtonBuilder()
-                        .setCustomId(`reaction_role_${emoji}`)
-                        .setEmoji(emoji)
-                        .setStyle(ButtonStyle.Primary)
-                );
-
-                if (currentRow.components.length === 5) {
+        
+                const button = new ButtonBuilder()
+                    .setCustomId(`reaction_role_${role.id}`)
+                    .setEmoji(emoji)
+                    .setStyle(ButtonStyle.Primary);
+        
+                if (currentRow.components.length < 5) {
+                    currentRow.addComponents(button);
+                } else {
                     actionRows.push(currentRow);
-                    currentRow = new ActionRowBuilder<ButtonBuilder>();
+                    currentRow = new ActionRowBuilder<ButtonBuilder>().addComponents(button);
                 }
             }
-
+        
             if (currentRow.components.length > 0) {
                 actionRows.push(currentRow);
             }
-
+        
             const roleDescription = roles
                 .map(({ emoji, roleId }) => `${emoji} -> <@&${roleId}>`)
                 .join('\n');
             embed.addFields({ name: 'Assigned Roles', value: roleDescription });
-
-            if (interaction.channel instanceof TextChannel) {
+        
+            if (interaction.channel && interaction.channel.isTextBased() && 'send' in interaction.channel) {
                 const message = await interaction.channel.send({
                     embeds: [embed],
                     components: actionRows,
                 });
-
+        
                 const reactionRole = new ReactionRole({
                     identifier: Math.random().toString(36).substring(2, 15),
                     guildId: interaction.guildId!,
@@ -131,20 +130,28 @@ const ReactionRoleCommand: Command = {
                     logs: [],
                 });
                 await reactionRole.save();
-
-                const successEmbed = new EmbedBuilder()
-                    .setColor('#00FF00')
-                    .setTitle('Reaction Role Created')
-                    .setDescription('Reaction role message created and saved.')
-                    .setTimestamp();
-                await interaction.reply({ embeds: [successEmbed], ephemeral: true });
+        
+                await interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                            .setColor('#00FF00')
+                            .setTitle('Reaction Role Created')
+                            .setDescription('Reaction role message created and saved.')
+                            .setTimestamp(),
+                    ],
+                    ephemeral: true,
+                });
             } else {
-                const errorEmbed = new EmbedBuilder()
-                    .setColor('#FF0000')
-                    .setTitle('Invalid Channel')
-                    .setDescription('Cannot send the message in the current channel.')
-                    .setTimestamp();
-                await interaction.reply({ embeds: [errorEmbed], ephemeral: true });
+                await interaction.reply({
+                    embeds: [
+                        new EmbedBuilder()
+                            .setColor('#FF0000')
+                            .setTitle('Invalid Channel')
+                            .setDescription('Cannot send the message in the current channel.')
+                            .setTimestamp(),
+                    ],
+                    ephemeral: true,
+                });
             }
         }
 
