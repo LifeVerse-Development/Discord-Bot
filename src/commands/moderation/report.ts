@@ -134,7 +134,7 @@ const ReportCommand: Command = {
                     reports
                         .map(
                             report =>
-                                `**Report ID:** ${report._id}\n**Reported User:** ${report.reportedUser}\n**Reason:** ${report.reason}\n**Time Added:** ${report.timestamp}\n**Description:** ${report.description}\n**Reporter:** ${report.reporter}\n**Media URL:** ${report.mediaUrl || 'No media provided.'}\n**Identifier:** ||${report.identifier}||\n`,
+                                `**Report ID:** ${report._id}\n**Reported User:** ${report.reportedUser}\n**Reason:** ${report.reason}\n**Time Added:** ${report.createdAt}\n**Description:** ${report.description}\n**Reporter:** ${report.reporter}\n**Media URL:** ${report.mediaUrl || 'No media provided.'}\n**Identifier:** ||${report.identifier}||\n`,
                         )
                         .join('\n'),
                 )

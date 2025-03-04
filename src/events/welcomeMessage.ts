@@ -62,7 +62,7 @@ export const handleWelcomeEvent = (client: Client) => {
                 .setThumbnail(member.user.displayAvatarURL())
                 .addFields(embedData.fields || [])
                 .setFooter({ text: embedData.footer })
-                .setTimestamp(welcomeData.timestamp);
+                .setTimestamp(welcomeData.createdAt);
 
             const channel = member.guild.channels.cache.get(welcomeData.channelId);
             if (channel && channel.isTextBased()) {

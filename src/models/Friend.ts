@@ -5,10 +5,11 @@ export interface IFriend extends Document {
     userId: string;
     friendId: string;
     guildId?: string;
-    status: 'pending' | 'accepted' | 'rejected';
+    status: 'pending' | 'accepted' | 'rejected' | string;
     buttonIds?: string[];
     buttonLabels?: string[];
-    timestamp: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const FriendSchema = new Schema<IFriend>({
@@ -19,8 +20,7 @@ const FriendSchema = new Schema<IFriend>({
     status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' },
     buttonIds: { type: [String], default: [] },
     buttonLabels: { type: [String], default: [] },
-    timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 FriendSchema.pre('save', function (next) {
     if (!this.identifier) {

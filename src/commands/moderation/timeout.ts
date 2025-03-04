@@ -132,7 +132,7 @@ const TimeoutCommand: Command = {
 👤 **User:** ${timeout.username} 
 📄 **Reason:** ${timeout.reason} 
 ⏱️ **Duration:** ${timeout.duration} minutes 
-🕒 **Time Added:** ${timeout.timestamp}`,
+🕒 **Time Added:** ${timeout.createdAt}`,
                         )
                         .join('\n'),
                 )

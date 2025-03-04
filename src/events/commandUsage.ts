@@ -26,20 +26,21 @@ export const commandUsageEvent = async (interaction: ChatInputCommandInteraction
         if (command) {
             if (!command.users.some(existingUser => existingUser.userId === user.id)) {
                 command.users.push({
+                    identifier: Math.random().toString(36).substring(2, 15),
                     userId: user.id,
                     username: user.username,
-                    identifier: Math.random().toString(36).substring(2, 15),
                     timestamp: new Date(),
                 });
                 await command.save();
             }
         } else {
             command = new CommandName({
+                identifier: Math.random().toString(36).substring(2, 15),
                 commandName: commandName,
                 users: [{
+                    identifier: Math.random().toString(36).substring(2, 15),
                     userId: user.id,
                     username: user.username,
-                    identifier: Math.random().toString(36).substring(2, 15),
                     timestamp: new Date(),
                 }],
             });
@@ -50,20 +51,21 @@ export const commandUsageEvent = async (interaction: ChatInputCommandInteraction
 
         if (commandUsage) {
             commandUsage.commands.push({
+                identifier: Math.random().toString(36).substring(2, 15),
                 commandName: commandName,
                 timestamp: new Date(),
-                identifier: Math.random().toString(36).substring(2, 15),
             });
             await commandUsage.save();
         } else {
             commandUsage = new CommandUsage({
+                identifier: Math.random().toString(36).substring(2, 15),
                 userId: user.id,
                 username: user.username,
                 channelId: channel.id,
                 commands: [{
+                    identifier: Math.random().toString(36).substring(2, 15),
                     commandName: commandName,
                     timestamp: new Date(),
-                    identifier: Math.random().toString(36).substring(2, 15),
                 }],
             });
             await commandUsage.save();

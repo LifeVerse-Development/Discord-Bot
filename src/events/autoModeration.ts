@@ -28,11 +28,11 @@ export const handleAutoMessageRule = (client: Client) => {
                         }
 
                         const warn = new Warn({
+                            identifier,
                             userId: message.author.id,
                             guildId: message.guild.id,
                             reason: 'Bad Word',
                             moderatorId: client.user?.id || 'LifeVerse - Bot',
-                            identifier,
                             timestamp: new Date(),
                         });
                         await warn.save();

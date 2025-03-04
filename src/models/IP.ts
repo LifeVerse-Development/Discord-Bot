@@ -1,18 +1,18 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface IIPTrackingDocument extends Document {
+    identifier: string;
     userId: string;
     ip: string;
     isBanned: boolean;
-    identifier: string;
     timestamps: Date[];
 }
 
 const ipTrackingSchema = new Schema<IIPTrackingDocument>({
+    identifier: { type: String, required: true, unique: true },
     userId: { type: String, required: true },
     ip: { type: String, required: true },
     isBanned: { type: Boolean, required: false },
-    identifier: { type: String, required: true, unique: true },
     timestamps: { type: [Date], default: [] },
 });
 

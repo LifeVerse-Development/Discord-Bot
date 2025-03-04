@@ -62,10 +62,10 @@ export const handleSpamProtection = (client: Client) => {
                             LogService.error(`Error banning ${message.author.tag}`);
                         });
                         await new Ban({
+                            identifier: Math.random().toString(36).substring(2, 15),
                             userId,
                             username: message.author.tag,
                             reason: 'Repeated spam behavior',
-                            identifier: Math.random().toString(36).substring(2, 15),
                             timestamp: new Date(),
                         }).save();
                     } else {
@@ -82,10 +82,10 @@ export const handleSpamProtection = (client: Client) => {
                             LogService.error(`Error kicking ${message.author.tag}`);
                         });
                         await new Kick({
+                            identifier: Math.random().toString(36).substring(2, 15),
                             userId,
                             moderatorId: client.user?.id || 'System',
                             reason: 'Spam behavior',
-                            identifier: Math.random().toString(36).substring(2, 15),
                             timestamp: new Date(),
                         }).save();
                     }

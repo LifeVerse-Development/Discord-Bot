@@ -131,7 +131,7 @@ const BanCommand: Command = {
                         bans
                             .map(
                                 ban =>
-                                    `👤 **User:** ${ban.username}\n📝 **Reason:** ${ban.reason}\n📅 **Time:** ${ban.timestamp.toLocaleString()}\n🆔 **Ban ID:** ${ban.identifier}\n—`, // Zeigt den Identifier in der Liste
+                                    `👤 **User:** ${ban.username}\n📝 **Reason:** ${ban.reason}\n📅 **Time:** ${ban.createdAt.toLocaleString()}\n🆔 **Ban ID:** ${ban.identifier}\n—`, // Zeigt den Identifier in der Liste
                             )
                             .join('\n'),
                     )
@@ -183,7 +183,7 @@ const BanCommand: Command = {
                             { name: '📝 Reason', value: ban.reason, inline: true },
                             {
                                 name: '📅 Ban Date',
-                                value: ban.timestamp.toLocaleString(),
+                                value: ban.createdAt.toLocaleString(),
                                 inline: false,
                             },
                             {

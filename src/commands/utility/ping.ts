@@ -13,7 +13,9 @@ const services = [
 ];
 
 const PingCommand: Command = {
-    data: new SlashCommandBuilder().setName('ping').setDescription('Shows the ping of the Discord bot, server, and LifeVerse services.'),
+    data: new SlashCommandBuilder()
+        .setName('ping')
+        .setDescription('Shows the ping of the Discord bot, server, and LifeVerse services.'),
 
     async execute(interaction: ChatInputCommandInteraction) {
         if (!interaction.guild) {

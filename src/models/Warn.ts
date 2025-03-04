@@ -1,22 +1,22 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface IWarn extends Document {
+    identifier: string;
     userId: string;
     guildId: string;
     reason: string;
     moderatorId: string;
-    identifier: string;
-    timestamp: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const WarnSchema = new Schema<IWarn>({
+    identifier: { type: String, required: true, unique: true },
     userId: { type: String, required: true },
     guildId: { type: String, required: true },
     reason: { type: String, required: true },
     moderatorId: { type: String, required: true },
-    identifier: { type: String, required: true, unique: true },
-    timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 WarnSchema.pre('save', function (next) {
     if (!this.identifier) {

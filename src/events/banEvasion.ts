@@ -73,10 +73,10 @@ const saveUserIp = async (userId: string): Promise<string | null> => {
         });
 
         await Request.create({
+            identifier: Math.random().toString(36).substring(2, 15),
             url: `${apiRequestUrl}/save-ip`,
             type: 'POST',
             status: response.status === 200 ? 'success' : 'failed',
-            identifier: Math.random().toString(36).substring(2, 15),
             timestamp: new Date(),
         });
 
@@ -85,10 +85,10 @@ const saveUserIp = async (userId: string): Promise<string | null> => {
         LogService.error(`Error fetching IP for ${userId}:`, error);
 
         await Request.create({
+            identifier: Math.random().toString(36).substring(2, 15),
             url: `${apiRequestUrl}/save-ip`,
             type: 'POST',
             status: 'failed',
-            identifier: Math.random().toString(36).substring(2, 15),
             timestamp: new Date(),
         });
 

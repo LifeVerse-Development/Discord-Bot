@@ -1,6 +1,7 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface IReport extends Document {
+    identifier: string;
     userId: string;
     username: string;
     reportedUser: string;
@@ -8,11 +9,12 @@ export interface IReport extends Document {
     description: string;
     mediaUrl?: string;
     reporter: string;
-    identifier: string;
-    timestamp: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const reportSchema = new Schema<IReport>({
+    identifier: { type: String, required: true, unique: true },
     userId: { type: String, required: true },
     username: { type: String, required: true },
     reportedUser: { type: String, required: true },
@@ -24,9 +26,7 @@ const reportSchema = new Schema<IReport>({
     description: { type: String, required: true },
     mediaUrl: { type: String, required: false },
     reporter: { type: String, required: true },
-    identifier: { type: String, required: true, unique: true },
-    timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 reportSchema.pre('save', function (next) {
     if (!this.identifier) {

@@ -8,13 +8,15 @@ import { LogService } from './services/logService';
 import { Command } from './functions/handleCommands';
 import { connectDB } from './events/connectDB';
 import { handleReadyEvent } from './events/ready';
-import { handleIpTrackingEvent } from './events/ipTracker';
 import { handleBanEvasionEvent } from './events/banEvasion';
 import { handleWelcomeEvent } from './events/welcomeMessage';
 import { commandUsageEvent } from './events/commandUsage';
 import { modalSubmitHandler } from './events/modalSubmitHandler';
 import { handleButtonIneraction } from './events/buttonHandler';
 import { handleAutoMessageRule } from './events/autoModeration';
+import { handleReactionButtonInteraction } from './events/reaction_role';
+import { handleXPListener } from './events/xp_gain';
+import { handleArchiveTicketButton, handleClaimTicketButton, handleCloseTicketButton, handleCreateTicketButton } from './events/ticket_button';
 
 export interface ExtendedClient extends Client {
     commands: Collection<string, Command>;
@@ -94,20 +96,22 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
     if (interaction.isButton()) {
         await handleButtonIneraction(interaction);
+        await handleCreateTicketButton(interaction);
+        await handleClaimTicketButton(interaction);
+        await handleArchiveTicketButton(interaction);
+        await handleCloseTicketButton(interaction);
+        await handleReactionButtonInteraction(interaction);
     }
 });
 
-// Connect the database
 connectDB();
 
-// Handle bot events
 handleReadyEvent(client);
-handleIpTrackingEvent(client);
 handleBanEvasionEvent(client);
 handleWelcomeEvent(client);
 handleAutoMessageRule(client);
+handleXPListener(client);
 
-// Start Express-Server
 server.listen(config.server.PORT || 3000, () => {
     console.log(`API server is running on port ${config.server.PORT || 3000}`);
 });

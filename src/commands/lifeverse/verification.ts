@@ -1,13 +1,4 @@
-import { 
-    SlashCommandBuilder, 
-    ChatInputCommandInteraction, 
-    EmbedBuilder, 
-    ModalBuilder, 
-    TextInputBuilder, 
-    TextInputStyle, 
-    ActionRowBuilder, 
-    PermissionsBitField 
-} from 'discord.js';
+import { SlashCommandBuilder, ChatInputCommandInteraction, EmbedBuilder, ModalBuilder, TextInputBuilder, TextInputStyle, ActionRowBuilder, PermissionsBitField } from 'discord.js';
 import { Command } from '../../functions/handleCommands';
 import { LogService } from '../../services/logService';
 import { Verification } from '../../models/Verification';
@@ -95,7 +86,7 @@ const VerificationCommand: Command = {
                     .addFields(
                         { name: '🛡️ Verified', value: verification.verified ? '✅ Yes' : '❌ No', inline: true },
                         { name: '🔑 Verification Code', value: `||\`${verification.code}\`||`, inline: true },
-                        { name: '📅 Verification Timestamp', value: `🕒 ${verification.timestamp.toString()}`, inline: false },
+                        { name: '📅 Verification Timestamp', value: `🕒 ${verification.createdAt.toString()}`, inline: false },
                         { name: '🌐 LifeVerse Profile URL', value: `[🔗 Click here](${verification.lifeVerseUrl})`, inline: true },
                     )
                     .setFooter({ text: '🔄 Use /verification start to begin your verification!' })

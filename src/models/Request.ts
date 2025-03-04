@@ -1,20 +1,20 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface IRequest extends Document {
+    identifier: string;
     url: string;
     type: string;
     status: string;
-    identifier: string;
-    timestamp: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const requestSchema = new Schema<IRequest>({
+    identifier: { type: String, required: true, unique: true },
     url: { type: String, required: true },
     type: { type: String, required: true },
     status: { type: String, required: true },
-    identifier: { type: String, required: true, unique: true },
-    timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 requestSchema.pre('save', function (next) {
     if (!this.identifier) {

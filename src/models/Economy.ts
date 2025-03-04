@@ -70,6 +70,8 @@ export interface IEconomy extends Document {
     portfolio: IPortfolio;
     inventory: IInventory;
     lastWorkedAt: Date | null;
+    createdAt: Date;
+    updatedAt: Date;
     initializePortfolio: () => Promise<void>;
     updatePortfolioValues: () => Promise<void>;
 }
@@ -124,7 +126,7 @@ const EconomySchema = new Schema<IEconomy>({
         }],
     },
     lastWorkedAt: { type: Date, default: null },
-});
+}, { timestamps: true });
 
 EconomySchema.methods.initializePortfolio = async function() {
     const initialCryptoValues: Record<string, number> = {

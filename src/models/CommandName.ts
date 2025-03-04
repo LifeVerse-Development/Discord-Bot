@@ -1,23 +1,34 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface ICommandName extends Document {
+    identifier: string;
     commandName: string;
     users: {
+        identifier: string;
         userId: string;
         username: string;
-        identifier: string;
         timestamp: Date;
     }[];
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const commandNameSchema = new Schema<ICommandName>({
+    identifier: { type: String, required: true, unique: true },
     commandName: { type: String, required: true, unique: true },
     users: [{
+        identifier: { type: String, required: true, unique: true },
         userId: { type: String, required: true },
         username: { type: String, required: true },
-        identifier: { type: String, required: true, unique: true },
         timestamp: { type: Date, default: Date.now }
     }],
+}, { timestamps: true });
+
+commandNameSchema.pre('save', function(next) {
+    if (!this.identifier) {
+        this.identifier = Math.random().toString(36).substring(2, 15);
+    }
+    next();
 });
 
 commandNameSchema.pre('save', function (next) {

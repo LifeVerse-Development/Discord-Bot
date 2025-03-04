@@ -1,12 +1,4 @@
-import {
-    ChatInputCommandInteraction,
-    SlashCommandBuilder,
-    PermissionFlagsBits,
-    Role,
-    EmbedBuilder,
-    GuildMember,
-    PermissionsBitField,
-} from 'discord.js';
+import { ChatInputCommandInteraction, SlashCommandBuilder, PermissionFlagsBits, Role, EmbedBuilder, GuildMember, PermissionsBitField } from 'discord.js';
 import { Command } from '../../functions/handleCommands';
 import { LogService } from '../../services/logService';
 

@@ -4,6 +4,9 @@ import { config } from '../config/config';
 import { LogService } from '../services/logService';
 
 import EconomyCommand from '../commands/general/economy';
+import LevelCommand from '../commands/general/level';
+import ServerInfoCommand from '../commands/general/serverinfo';
+import UserInfoCommand from '../commands/general/userinfo';
 import LifeVerseInfoCommand from '../commands/lifeverse/lifeverseinfo';
 import VerificationCommand from '../commands/lifeverse/verification';
 import FriendCommand from '../commands/lifeverse/friend';
@@ -19,12 +22,13 @@ import AntiLinkCommand from '../commands/moderation/antilink';
 import WarnCommand from '../commands/moderation/warn';
 import PollCommand from '../commands/moderation/poll';
 import AutoModerationCommand from '../commands/moderation/automod';
+import ReactionRoleCommand from '../commands/moderation/reactionrole';
+import TicketCommand from '../commands/moderation/ticket';
 import EvalCommand from '../commands/owner/eval';
 import LogoutCommand from '../commands/owner/logout';
 import PingCommand from '../commands/utility/ping';
 import InviteCommand from '../commands/utility/invite';
-import ServerInfoCommand from '../commands/utility/serverinfo';
-import UserInfoCommand from '../commands/utility/userinfo';
+import HelpCommand from '../commands/utility/help';
 
 dotenv.config();
 
@@ -35,6 +39,9 @@ const guildId = config.application.TEST_GUILD_ID;
 const commandFiles = [
     // General Commands
     EconomyCommand,
+    LevelCommand,
+    ServerInfoCommand,
+    UserInfoCommand,
     // LifeVerse Commands
     LifeVerseInfoCommand,
     VerificationCommand,
@@ -52,14 +59,15 @@ const commandFiles = [
     WarnCommand,
     PollCommand,
     AutoModerationCommand,
+    ReactionRoleCommand,
+    TicketCommand,
     // Owner Commands
     EvalCommand,
     LogoutCommand,
     // Utility Commands
     PingCommand,
     InviteCommand,
-    ServerInfoCommand,
-    UserInfoCommand,
+    HelpCommand,
 ];
 
 const commands: any[] = [];

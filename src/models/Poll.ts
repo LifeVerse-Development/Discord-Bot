@@ -18,6 +18,7 @@ interface IPoll extends Document {
     createdBy: string;
     endsAt: Date;
     createdAt: Date;
+    updatedAt: Date;
 }
 
 const PollSchema = new Schema<IPoll>({
@@ -35,8 +36,7 @@ const PollSchema = new Schema<IPoll>({
     active: { type: Boolean, default: true },
     createdBy: { type: String, required: true },
     endsAt: { type: Date },
-    createdAt: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 PollSchema.pre('save', function (next) {
     if (!this.identifier) {

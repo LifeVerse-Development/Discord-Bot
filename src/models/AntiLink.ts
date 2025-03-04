@@ -1,23 +1,23 @@
 import { Schema, model, Document } from 'mongoose';
 
 export interface IAntiLink extends Document {
+    identifier: string;
     guildId: string;
     guildName: string;
     enabled: boolean;
     allowedChannels: string[];
-    identifier: string;
-    timestamp: Date;
-    isAllowedInChannel(channelId: string): boolean;
+    createdAt: Date;
+    updatedAt: Date;
+    isAllowedInChannel(channelId: string): Boolean;
 }
 
 const AntiLinkSchema = new Schema<IAntiLink>({
+    identifier: { type: String, required: true, unique: true },
     guildId: { type: String, required: true, unique: true },
     guildName: { type: String, required: true },
     enabled: { type: Boolean, default: false },
     allowedChannels: { type: [String], default: [] },
-    identifier: { type: String, required: true, unique: true },
-    timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 AntiLinkSchema.pre('save', function (next) {
     if (!this.identifier) {

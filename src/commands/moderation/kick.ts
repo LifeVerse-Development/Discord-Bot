@@ -96,7 +96,7 @@ const KickCommand: Command = {
                             .setColor('Orange')
                             .setTitle('📋 Last 10 Kicks')
                             .setDescription(
-                                `👤 **User:** ${user.username}\n👮 **Moderator:** <@${kick.moderatorId}>\n📝 **Reason:** ${kick.reason}\n📅 **Time:** ${kick.timestamp.toLocaleString()}\n🔑 **Identifier:** ||${kick.identifier}||\n—`, // Identifier anzeigen
+                                `👤 **User:** ${user.username}\n👮 **Moderator:** <@${kick.moderatorId}>\n📝 **Reason:** ${kick.reason}\n📅 **Time:** ${kick.createdAt.toLocaleString()}\n🔑 **Identifier:** ||${kick.identifier}||\n—`, // Identifier anzeigen
                             )
                             .setTimestamp(),
                     );

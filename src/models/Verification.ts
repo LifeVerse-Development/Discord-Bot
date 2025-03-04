@@ -8,7 +8,8 @@ interface IVerification extends Document {
     lifeVerseUsername: string;
     code: string;
     verified: boolean;
-    timestamp: Date;
+    createdAt: Date;
+    updatedAt: Date;
 }
 
 const verificationSchema = new Schema<IVerification>({
@@ -19,8 +20,7 @@ const verificationSchema = new Schema<IVerification>({
     lifeVerseUsername: { type: String, required: false },
     code: { type: String, required: true },
     verified: { type: Boolean, default: false },
-    timestamp: { type: Date, default: Date.now },
-});
+}, { timestamps: true });
 
 verificationSchema.pre('save', function (next) {
     if (!this.identifier) {

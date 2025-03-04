@@ -100,7 +100,7 @@ const MuteCommand: Command = {
                         mutes
                             .map(
                                 mute =>
-                                    `👤 **User:** ${mute.username}\n📝 **Reason:** ${mute.reason}\n📅 **Time:** ${mute.timestamp.toLocaleString()}\n🔑 **Identifier:** ||${mute.identifier}||\n—`,
+                                    `👤 **User:** ${mute.username}\n📝 **Reason:** ${mute.reason}\n📅 **Time:** ${mute.createdAt.toLocaleString()}\n🔑 **Identifier:** ||${mute.identifier}||\n—`,
                             )
                             .join('\n'),
                     )
@@ -138,7 +138,7 @@ const MuteCommand: Command = {
                         { name: '📝 Reason', value: mute.reason, inline: true },
                         {
                             name: '📅 Mute Time',
-                            value: mute.timestamp.toLocaleString(),
+                            value: mute.createdAt.toLocaleString(),
                             inline: false,
                         },
                         {
