@@ -18,6 +18,8 @@ import { handleReactionButtonInteraction } from './events/reaction_role';
 import { handleXPListener } from './events/xp_gain';
 import { handleArchiveTicketButton, handleClaimTicketButton, handleCloseTicketButton, handleCreateTicketButton } from './events/ticket_button';
 import { handleVoiceStateUpdate } from './events/joinToCreate';
+import { handleActivityTracking } from './events/activity';
+import { detectToxicBehavior } from './events/toxicity';
 
 export interface ExtendedClient extends Client {
     commands: Collection<string, Command>;
@@ -35,6 +37,8 @@ const client = new Client({
         GatewayIntentBits.MessageContent,
     ],
 }) as ExtendedClient;
+
+connectDB();
 
 function displayCommandsTable() {
     const maxCommandNameLength = Math.max(...[...client.commands.values()].map(command => command.data.name.length));
@@ -105,14 +109,14 @@ client.on('interactionCreate', async (interaction: Interaction) => {
     }
 });
 
-connectDB();
-
 handleReadyEvent(client);
 handleBanEvasionEvent(client);
 handleWelcomeEvent(client);
 handleAutoMessageRule(client);
 handleXPListener(client);
 handleVoiceStateUpdate(client);
+handleActivityTracking(client);
+detectToxicBehavior(client);
 
 server.listen(config.server.PORT || 3000, () => {
     console.log(`API server is running on port ${config.server.PORT || 3000}`);

@@ -30,6 +30,10 @@ import LogoutCommand from '../commands/owner/logout';
 import PingCommand from '../commands/utility/ping';
 import InviteCommand from '../commands/utility/invite';
 import HelpCommand from '../commands/utility/help';
+import ActivityCommand from '../commands/general/activity';
+import StatsCommand from '../commands/moderation/stats';
+import AnnouncementCommand from '../commands/moderation/announcement';
+import EmojiCommand from '../commands/moderation/emoji';
 
 dotenv.config();
 
@@ -43,6 +47,7 @@ const commandFiles = [
     LevelCommand,
     ServerInfoCommand,
     UserInfoCommand,
+    ActivityCommand,
     // LifeVerse Commands
     LifeVerseInfoCommand,
     VerificationCommand,
@@ -63,6 +68,9 @@ const commandFiles = [
     ReactionRoleCommand,
     TicketCommand,
     JoinToCreateCommand,
+    StatsCommand,
+    AnnouncementCommand,
+    EmojiCommand,
     // Owner Commands
     EvalCommand,
     LogoutCommand,

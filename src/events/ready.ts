@@ -2,6 +2,7 @@ import { Client, EmbedBuilder, PermissionsBitField, TextChannel, OAuth2Scopes } 
 import { registerCommands } from '../functions/register';
 import { LogService } from '../services/logService';
 import { config } from '../config/config';
+import { updateStats } from './stats';
 
 let startMessage: any;
 
@@ -60,6 +61,10 @@ export const handleReadyEvent = (client: Client) => {
             setInterval(updatePresence, 20000);
 
             updatePresence();
+
+            setInterval(async () => {
+                await updateStats(client);
+            }, 1 * 60 * 1000);
 
             await registerCommands();
 
