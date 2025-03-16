@@ -1,7 +1,7 @@
 import { Client, Collection, GatewayIntentBits, Interaction } from 'discord.js';
 import { readdirSync } from 'fs';
 import path from 'path';
-import server from './server';
+import { server } from './server';
 import { config } from './config/config';
 import { LogService } from './services/logService';
 

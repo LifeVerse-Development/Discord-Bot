@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import { IPTracking } from './models/IP';
 import { config } from './config/config';
 
-const server = express();
+export const server = express();
 
 mongoose.connect(config.database.MONGO_URI, {});
 
@@ -94,5 +94,3 @@ server.get('/list-tracked-ips', async (_req: Request, res: Response) => {
         return res.status(500).json({ error: 'Error retrieving IP tracking data' });
     }
 });
-
-export default server;
