@@ -14,9 +14,7 @@ export async function updateStats(client: Client) {
     isUpdating = true;
 
     try {
-        console.log('updateStats started...');
         const stats = await Stat.find();
-        console.log(`Found stats: ${stats.length}`);
 
         for (const stat of stats) {
             console.log(`Updating stat: ${stat.type} in Guild: ${stat.guildId}`);
@@ -88,7 +86,6 @@ export async function updateStats(client: Client) {
             }
 
             if (newName && channel.name !== newName) {
-                console.log(`Updating channel name to: ${newName}`);
                 await channel.setName(newName);
             }
         }
@@ -96,6 +93,5 @@ export async function updateStats(client: Client) {
         console.error('Error in updateStats:', error);
     } finally {
         isUpdating = false;
-        console.log('updateStats completed.');
     }
 }
